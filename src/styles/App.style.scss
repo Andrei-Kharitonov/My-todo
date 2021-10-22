@@ -1,0 +1,36 @@
+@import "~normalize.css";
+
+body {
+  font-family: "Roboto";
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.title {
+  margin-bottom: 8px;
+  font-size: 48px;
+  text-align: center;
+  color: #1976d2;
+}
+
+.home-title {
+  text-align: center;
+  color: #1976d2;
+  font-size: 44px;
+  margin-top: 10px;
+}
+
+h2 {
+  margin-top: 0;
+  color: #1976d2;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  margin-bottom: 16px;
+}
