@@ -46,6 +46,7 @@ function TodoCard({ title, text, date, id, completed }) {
             <Button
               className="todo__btn-del"
               variant="outlined"
+              style={{ marginLeft: "0" }}
               startIcon={<DeleteIcon />}
               onClick={() => removeTodo(id)}
             >

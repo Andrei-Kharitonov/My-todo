@@ -8,11 +8,7 @@
   .todo__container {
     display: flex;
     justify-content: space-between;
-    // @media (max-width: 450px) {
-    //   justify-content: flex-start;
-    //   flex-direction: column;
-    // }
-    &_small {
+    @media (max-width: 450px) {
       justify-content: flex-start;
       flex-direction: column;
     }
