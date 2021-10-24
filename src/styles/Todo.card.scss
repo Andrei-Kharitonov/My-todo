@@ -55,10 +55,15 @@
   }
 }
 
-.lastTodoCard {
+.lastTodos {
   list-style-type: none;
   padding: 0;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  &__card {
+    box-sizing: border-box;
+    width: 290px;
+    margin: 5px;
+  }
 }

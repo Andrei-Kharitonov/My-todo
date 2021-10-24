@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
+import { addTodo } from "../../reducers/todo.reducer";
 import TextField from "@mui/material/TextField";
 import LoadingButton from "@mui/lab/LoadingButton";
 import SendIcon from "@mui/icons-material/Send";
@@ -12,16 +14,17 @@ function CreateTodo() {
   let [inpValueText, setInpValueText] = useState("Text");
   let [loading, setLoading] = useState(false);
   let [alignment, setAlignment] = useState("title");
+  let dispatch = useDispatch();
 
   function formHandler(event) {
     event.preventDefault();
     setLoading(true);
 
     let newTodo = {
+      completed: false,
+      date: new Date().toLocaleString(),
       title: inpValueTitle,
       text: inpValueText,
-      date: new Date().toLocaleString(),
-      completed: false,
     };
 
     fetch("https://react-todo-list-15fdb-default-rtdb.europe-west1.firebasedatabase.app/todos.json", {
@@ -32,7 +35,11 @@ function CreateTodo() {
       }
     })
       .then(response => response.json())
-      .then(setLoading(false));
+      .then(response => {
+        newTodo.id = response.name;
+        dispatch(addTodo(newTodo));
+      })
+      .then(() => setLoading(false));
 
     setInpValueTitle("Title");
     setInpValueText("Text");

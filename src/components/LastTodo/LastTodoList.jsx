@@ -1,22 +1,31 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 import LastTodoCard from "./LastTodoCard";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 
-function LastTodoList({ todo }) {
-  if (todo == "load") {
+function LastTodoList() {
+  let todos = useSelector(state => state.todo.todos);
+  let lastTodos = todos.slice(-3);
+  let loading = useSelector(state => state.todo.loading);
+
+  if (loading) {
     return (
       <Box sx={{ display: "flex", justifyContent: "center" }}>
         <CircularProgress />
       </Box>
     );
-  } else if (todo.length > 0) {
+  } else if (lastTodos.length == 0) {
     return (
-      <ul className="lastTodoCard">
-        {todo.map((todo) => {
+      <h3 style={{ textAlign: "center", fontSize: "23px" }}>No todo!</h3>
+    );
+  } else {
+    return (
+      <ul className="lastTodos">
+        {lastTodos.map((todo) => {
           return (
-            <li key={todo.id} style={{ boxSizing: "border-box", margin: "10px" }}>
+            <li key={todo.id} className="lastTodos__card">
               <LastTodoCard
                 title={todo.title}
                 text={todo.text}
@@ -28,10 +37,6 @@ function LastTodoList({ todo }) {
           );
         })}
       </ul>
-    );
-  } else {
-    return (
-      <h3 style={{ textAlign: "center", fontSize: "23px" }}>No todo!</h3>
     );
   }
 }

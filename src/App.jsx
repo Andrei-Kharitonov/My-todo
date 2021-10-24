@@ -1,6 +1,8 @@
 import { hot } from "react-hot-loader/root";
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
+import { addTodosFromDB, setLoading } from "./reducers/todo.reducer";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
@@ -10,30 +12,49 @@ import NewTodo from "./pages/NewTodo";
 import AllTodo from "./pages/AllTodo";
 
 function App() {
-  const [value, setValue] = React.useState(0);
+  let [tabValue, setTabValue] = React.useState(0);
+  let dispatch = useDispatch();
 
-  const handleChange = (_event, newValue) => {
-    setValue(newValue);
+  useEffect(() => {
+    fetch("https://react-todo-list-15fdb-default-rtdb.europe-west1.firebasedatabase.app/todos.json", {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json"
+      }
+    })
+      .then(response => response.json())
+      .then(response => {
+        if (response) {
+          let todos = Object.keys(response).map(key => ({ ...response[key], id: key }));
+          dispatch(addTodosFromDB(todos));
+        }
+      })
+      .then(() => dispatch(setLoading(false)));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  function handleTabChange(_event, newTabValue) {
+    setTabValue(newTabValue);
   };
 
   return (
     <div>
-      <h1 className="title">My todo list</h1>
+      <h1 className="title">My todo</h1>
       <Box sx={{ width: "100%" }}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <Tabs value={value} onChange={handleChange} centered>
+          <Tabs value={tabValue} onChange={handleTabChange} centered>
             <Tab label="Main" />
             <Tab label="New todo" />
             <Tab label="All todo" />
           </Tabs>
         </Box>
-        <TabPanel value={value} index={0}>
+        <TabPanel value={tabValue} index={0}>
           <HomePage />
         </TabPanel>
-        <TabPanel value={value} index={1}>
+        <TabPanel value={tabValue} index={1}>
           <NewTodo />
         </TabPanel>
-        <TabPanel value={value} index={2}>
+        <TabPanel value={tabValue} index={2}>
           <AllTodo />
         </TabPanel>
       </Box>
@@ -42,7 +63,7 @@ function App() {
 }
 
 App.propTypes = {
-  value: PropTypes.number
+  tabValue: PropTypes.number
 };
 
 export default hot(App);

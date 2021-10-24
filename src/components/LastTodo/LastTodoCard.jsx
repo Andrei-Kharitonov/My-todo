@@ -1,6 +1,7 @@
-import React, { useContext } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import Context from "../context";
+import { useDispatch } from "react-redux";
+import { deleteTodo, completeTodo } from "../../reducers/todo.reducer";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
@@ -10,15 +11,34 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
 
 function LastTodoCard({ title, text, date, id, completed }) {
-  let { removeTodo, completeTodo } = useContext(Context);
+  let dispatch = useDispatch();
+
+  function performTodo(id) {
+    dispatch(completeTodo(id));
+
+    fetch(`https://react-todo-list-15fdb-default-rtdb.europe-west1.firebasedatabase.app/todos/${id}/completed.json`, {
+      method: "PUT",
+      body: JSON.stringify(true),
+      headers: {
+        "Content-type": "application/json"
+      }
+    });
+  }
+
+  function removeTodo(id) {
+    dispatch(deleteTodo(id));
+
+    fetch(`https://react-todo-list-15fdb-default-rtdb.europe-west1.firebasedatabase.app/todos/${id}.json`, {
+      method: "DELETE",
+      headers: {
+        "Content-type": "application/json"
+      }
+    });
+  }
 
   return (
     <Card id={id} className={completed ? "todo todo_comp" : "todo"} style={{ marginBottom: "0" }}>
-      <Card
-        className="todo__container"
-        variant="outlined"
-        style={{ display: "block" }}
-      >
+      <Card className="todo__container" variant="outlined" style={{ display: "block" }}>
         <React.Fragment>
           <CardContent>
             <Typography className={completed ? "todo__title todo__title_comp" : "todo__title"} variant="h5" component="h5">
@@ -37,18 +57,21 @@ function LastTodoCard({ title, text, date, id, completed }) {
           </CardContent>
           <CardActions className="todo__btns">
             <Button
-              className={completed ? "todo__btn-comp todo__btn-comp_comp" : "todo__btn-comp"}
+              className="todo__btn-comp"
               variant="outlined"
+              color={completed ? "success" : "primary"}
               startIcon={<DoneOutlineIcon />}
               style={{ width: "100%", margin: "5px 0" }}
-              onClick={() => completeTodo(id)}
+              onClick={() => performTodo(id)}
             >
               Complete
             </Button>
             <Button
               className="todo__btn-del"
               variant="outlined"
+              color="error"
               startIcon={<DeleteIcon />}
+              style={{ width: "100%", margin: "5px 0" }}
               onClick={() => removeTodo(id)}
             >
               Delete
