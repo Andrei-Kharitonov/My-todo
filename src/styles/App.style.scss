@@ -14,13 +14,19 @@ body {
   font-size: 48px;
   text-align: center;
   color: #1976d2;
+  @media (max-width: 450px) {
+    font-size: 33px;
+  }
 }
 
 .home-title {
   text-align: center;
   color: #1976d2;
   font-size: 44px;
-  margin-top: 10px;
+  margin-top: 0;
+  @media (max-width: 450px) {
+    font-size: 33px;
+  }
 }
 
 h2 {
@@ -33,4 +39,20 @@ h2 {
   justify-content: space-between;
   margin-top: 8px;
   margin-bottom: 16px;
+}
+
+fieldset {
+  border: 3px solid #1976d2;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  @media (max-width: 450px) {
+    padding: 2px;
+  }
+  h2 {
+    margin: 8px;
+  }
+}
+
+.stats {
+  color: #2196f3;
 }

@@ -17,7 +17,7 @@ function TodoList() {
     );
   } else if (todos.length == 0) {
     return (
-      <h3 style={{ textAlign: "center", fontSize: "23px" }}>No todo!</h3>
+      <h3 style={{ textAlign: "center", fontSize: "23px", color: "#2196f3" }}>No todo!</h3>
     );
   } else {
     return (
