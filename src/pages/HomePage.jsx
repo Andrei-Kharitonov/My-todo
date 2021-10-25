@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import TodoList from "../components/TodoList/TodoList";
 import Statistics from "../components/Statistics/Statistics";
 
@@ -32,6 +33,8 @@ let styles = {
 let todoSlice = -2;
 
 function HomePage() {
+  let allTodos = useSelector(state => state.todo.todos);
+
   return (
     <div className="container">
       <h2 className="home-title">Welcome in My-todo</h2>
@@ -45,7 +48,7 @@ function HomePage() {
         <fieldset className="last-todo">
           <legend><h2>Last todo</h2></legend>
           <div className="container">
-            <TodoList styles={styles} todoSlice={todoSlice} />
+            <TodoList allTodos={allTodos} styles={styles} todoSlice={todoSlice} />
           </div>
         </fieldset>
       </div>

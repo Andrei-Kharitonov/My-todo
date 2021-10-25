@@ -74,3 +74,11 @@ fieldset {
 .last-todo {
   display: inline-block;
 }
+
+.sort {
+  .sort-todo {
+    @media (max-width: 450px) {
+      flex-direction: column;
+    }
+  }
+}

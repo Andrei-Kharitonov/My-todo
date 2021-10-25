@@ -5,9 +5,10 @@ import TodoCard from "./TodoCard";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 
-function TodoList({ styles, todoSlice }) {
-  let allTodos = useSelector(state => state.todo.todos);
+function TodoList({ allTodos, styles, todoSlice }) {
+  // let allTodos = useSelector(state => state.todo.todos);
   let loading = useSelector(state => state.todo.loading);
+  // let todos = allTodos.slice(todoSlice);
   let todos = allTodos.slice(todoSlice);
 
   if (loading) {
@@ -43,6 +44,7 @@ function TodoList({ styles, todoSlice }) {
 }
 
 TodoList.propTypes = {
+  allTodos: PropTypes.array,
   todos: PropTypes.array,
   loading: PropTypes.bool,
   title: PropTypes.string,
