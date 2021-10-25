@@ -1,6 +1,5 @@
 import { hot } from "react-hot-loader/root";
 import React, { useEffect } from "react";
-import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { addTodosFromDB, setLoading } from "./reducers/todo.reducer";
 import Tabs from "@mui/material/Tabs";
@@ -61,9 +60,5 @@ function App() {
     </div>
   );
 }
-
-App.propTypes = {
-  tabValue: PropTypes.number
-};
 
 export default hot(App);

@@ -10,7 +10,8 @@ body {
 }
 
 .title {
-  margin-bottom: 8px;
+  margin-bottom: 6px;
+  margin-top: 12px;
   font-size: 48px;
   text-align: center;
   color: #1976d2;
@@ -46,7 +47,7 @@ fieldset {
   border-radius: 8px;
   margin-bottom: 30px;
   @media (max-width: 450px) {
-    padding: 2px;
+    padding: 6px;
   }
   h2 {
     margin: 8px;
@@ -55,4 +56,21 @@ fieldset {
 
 .stats {
   color: #2196f3;
+}
+
+.home-page {
+  display: flex;
+  justify-content: center;
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
+}
+
+.statistic {
+  display: inline-block;
+  min-width: 210px;
+}
+
+.last-todo {
+  display: inline-block;
 }

@@ -10,8 +10,8 @@ import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import NewTodoCard from "./NewTodoCard";
 
 function CreateTodo() {
-  let [inpValueTitle, setInpValueTitle] = useState("Title");
-  let [inpValueText, setInpValueText] = useState("Text");
+  let [inpValueTitle, setInpValueTitle] = useState("");
+  let [inpValueText, setInpValueText] = useState("");
   let [loading, setLoading] = useState(false);
   let [alignment, setAlignment] = useState("title");
   let dispatch = useDispatch();
@@ -41,8 +41,8 @@ function CreateTodo() {
       })
       .then(() => setLoading(false));
 
-    setInpValueTitle("Title");
-    setInpValueText("Text");
+    setInpValueTitle("");
+    setInpValueText("");
   }
 
   function handleButtonChange(_event, newAlignment) {
@@ -60,7 +60,6 @@ function CreateTodo() {
             multiline
             rows={3}
             fullWidth
-            autoFocus
             label="Todo title"
             id="InpTodoTitle"
             value={inpValueTitle}

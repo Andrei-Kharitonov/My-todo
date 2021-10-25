@@ -10,7 +10,7 @@ import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
 
-function TodoCard({ title, text, date, id, completed }) {
+function TodoCard({ title, text, date, id, completed, styles }) {
   let dispatch = useDispatch();
 
   function performTodo(id) {
@@ -37,10 +37,10 @@ function TodoCard({ title, text, date, id, completed }) {
   }
 
   return (
-    <Card id={id} className={completed ? "todo todo_comp" : "todo"}>
-      <Card className="todo__container" variant="outlined">
+    <Card id={id} className={completed ? "todo todo_comp" : "todo"} style={styles.card}>
+      <Card className="todo__container" variant="outlined" style={styles.cardInner}>
         <React.Fragment>
-          <CardContent style={{ width: "100%" }}>
+          <CardContent style={styles.cardContent}>
             <Typography className={completed ? "todo__title todo__title_comp" : "todo__title"} variant="h5" component="h5">
               {title}
             </Typography>
@@ -59,8 +59,10 @@ function TodoCard({ title, text, date, id, completed }) {
             <Button
               className="todo__btn-comp"
               variant="outlined"
-              color={completed ? "success" : "primary"}
+              color="success"
+              style={styles.btn}
               startIcon={<DoneOutlineIcon />}
+              disabled={completed}
               onClick={() => performTodo(id)}
             >
               Complete
@@ -69,7 +71,7 @@ function TodoCard({ title, text, date, id, completed }) {
               className="todo__btn-del"
               variant="outlined"
               color="error"
-              style={{ marginLeft: "0" }}
+              style={styles.btn}
               startIcon={<DeleteIcon />}
               onClick={() => removeTodo(id)}
             >
@@ -87,7 +89,8 @@ TodoCard.propTypes = {
   text: PropTypes.string,
   date: PropTypes.string,
   id: PropTypes.string,
-  completed: PropTypes.bool
+  completed: PropTypes.bool,
+  styles: PropTypes.object,
 };
 
 export default TodoCard;
