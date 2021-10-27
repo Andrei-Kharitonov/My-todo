@@ -2,15 +2,16 @@ import { hot } from "react-hot-loader/root";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { addTodosFromDB, setLoading } from "./reducers/todo.reducer";
-import { Switch, Route, Link, BrowserRouter } from "react-router-dom";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
+import TabPanel from "./components/TabPanel";
 import HomePage from "./pages/HomePage";
 import NewTodo from "./pages/NewTodo";
 import AllTodo from "./pages/AllTodo";
 
 function App() {
+  let [tabValue, setTabValue] = React.useState(0);
   let dispatch = useDispatch();
 
   useEffect(() => {
@@ -31,31 +32,32 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  function handleTabChange(_event, newTabValue) {
+    setTabValue(newTabValue);
+  };
+
   return (
-    <BrowserRouter>
-      <div className="App">
-        <h1 className="title">My todo</h1>
-        <Route
-          path="/"
-          render={({ location }) => (
-            <Box sx={{ width: "100%" }}>
-              <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-                <Tabs value={location.pathname} centered>
-                  <Tab label="Main" value="/" component={Link} to={"/"} />
-                  <Tab label="New todo" value="/new_todo" component={Link} to={"/new_todo"} />
-                  <Tab label="All todo" value="/all_todo" component={Link} to={"/all_todo"} />
-                </Tabs>
-              </Box>
-              <Switch>
-                <Route path={"/new_todo"} render={() => <NewTodo />} />
-                <Route path={"/all_todo"} render={() => <AllTodo />} />
-                <Route path={"/"} render={() => <HomePage />} />
-              </Switch>
-            </Box>
-          )}
-        />
-      </div>
-    </BrowserRouter>
+    <div>
+      <h1 className="title">My todo</h1>
+      <Box sx={{ width: "100%" }}>
+        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+          <Tabs value={tabValue} onChange={handleTabChange} centered>
+            <Tab label="Main" />
+            <Tab label="New todo" />
+            <Tab label="All todo" />
+          </Tabs>
+        </Box>
+        <TabPanel value={tabValue} index={0}>
+          <HomePage />
+        </TabPanel>
+        <TabPanel value={tabValue} index={1}>
+          <NewTodo />
+        </TabPanel>
+        <TabPanel value={tabValue} index={2}>
+          <AllTodo />
+        </TabPanel>
+      </Box>
+    </div>
   );
 }
 
