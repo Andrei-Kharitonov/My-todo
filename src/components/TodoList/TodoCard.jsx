@@ -9,6 +9,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
+import RedactModal from "../Redact/RedactModal";
 
 function TodoCard({ title, text, date, id, completed, styles }) {
   let dispatch = useDispatch();
@@ -37,8 +38,8 @@ function TodoCard({ title, text, date, id, completed, styles }) {
   }
 
   return (
-    <Card id={id} className={completed ? "todo todo_comp" : "todo"} style={styles.card}>
-      <Card className="todo__container" variant="outlined" style={styles.cardInner}>
+    <Card id={id} className={completed ? "todo todo_comp" : "todo"} variant="outlined" style={styles.card}>
+      <div className="todo__container" style={styles.cardInner}>
         <React.Fragment>
           <CardContent style={styles.cardContent}>
             <Typography className={completed ? "todo__title todo__title_comp" : "todo__title"} variant="h5" component="h5">
@@ -49,13 +50,14 @@ function TodoCard({ title, text, date, id, completed, styles }) {
             </Typography>
             <hr />
             <Typography className="todo__date" variant="p" component="p">
-              Date: {date}
+              {date}
             </Typography>
             <Typography className={completed ? "todo__status todo__status_comp" : "todo__status"} variant="p" component="p">
               Status: {completed ? "completed" : "not completed"}
             </Typography>
           </CardContent>
           <CardActions className="todo__btns">
+            <RedactModal title={title} text={text} id={id} completed={completed} />
             <Button
               className="todo__btn-comp"
               variant="outlined"
@@ -79,7 +81,7 @@ function TodoCard({ title, text, date, id, completed, styles }) {
             </Button>
           </CardActions>
         </React.Fragment>
-      </Card>
+      </div>
     </Card >
   );
 }

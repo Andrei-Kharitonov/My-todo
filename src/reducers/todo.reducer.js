@@ -23,10 +23,17 @@ export const todoSlice = createSlice({
     completeTodo: (state, action) => {
       let id = action.payload;
       state.todos = state.todos.map(todo => todo.id == id ? Object.assign({}, todo, { completed: true }) : todo);
+    },
+    redactTodo: (state, action) => {
+      let id = action.payload.id;
+      state.todos = state.todos.map(todo => todo.id == id
+        ? Object.assign({}, todo, { title: action.payload.title, text: action.payload.text })
+        : todo);
+      console.log(action.payload.id, action.payload.title, action.payload.text);
     }
   }
 });
 
-export const { addTodosFromDB, addTodo, setLoading, deleteTodo, completeTodo } = todoSlice.actions;
+export const { addTodosFromDB, addTodo, setLoading, deleteTodo, completeTodo, redactTodo } = todoSlice.actions;
 
 export default todoSlice.reducer;

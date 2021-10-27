@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
-import { addTodo } from "../../reducers/todo.reducer";
+import { redactTodo } from "../../reducers/todo.reducer";
 import TextField from "@mui/material/TextField";
 import LoadingButton from "@mui/lab/LoadingButton";
 import SendIcon from "@mui/icons-material/Send";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import NewTodoCard from "./NewTodoCard";
+import NewTodoCard from "../CreateTodo/NewTodoCard";
 
-function CreateTodo() {
-  let [inpValueTitle, setInpValueTitle] = useState("");
-  let [inpValueText, setInpValueText] = useState("");
+function Redact({ todoTitle, todoText, todoId, todoComp }) {
+  let [inpValueTitle, setInpValueTitle] = useState(todoTitle);
+  let [inpValueText, setInpValueText] = useState(todoText);
   let [loading, setLoading] = useState(false);
   let [alignment, setAlignment] = useState("title");
   let dispatch = useDispatch();
@@ -20,29 +20,27 @@ function CreateTodo() {
     event.preventDefault();
     setLoading(true);
 
-    let newTodo = {
-      completed: false,
-      date: "Date: " + new Date().toLocaleString(),
+    let redactedTodo = {
+      completed: todoComp,
+      date: "Changed: " + new Date().toLocaleString(),
       title: inpValueTitle,
       text: inpValueText,
     };
 
-    fetch("https://react-todo-list-15fdb-default-rtdb.europe-west1.firebasedatabase.app/todos.json", {
-      method: "POST",
-      body: JSON.stringify(newTodo),
+    fetch(`https://react-todo-list-15fdb-default-rtdb.europe-west1.firebasedatabase.app/todos/${todoId}.json`, {
+      method: "PUT",
+      body: JSON.stringify(redactedTodo),
       headers: {
         "Content-type": "application/json"
       }
     })
       .then(response => response.json())
       .then(response => {
-        newTodo.id = response.name;
-        dispatch(addTodo(newTodo));
+        redactedTodo.id = response.name;
+        dispatch(redactTodo({ id: todoId, title: redactedTodo.title, text: redactedTodo.text }));
       })
       .then(() => setLoading(false));
 
-    setInpValueTitle("");
-    setInpValueText("");
   }
 
   function handleButtonChange(_event, newAlignment) {
@@ -59,7 +57,7 @@ function CreateTodo() {
             multiline
             rows={3}
             fullWidth
-            label="Title.."
+            label="Todo title"
             id="InpTodoTitle"
             value={inpValueTitle}
             onChange={event => setInpValueTitle(event.target.value)}
@@ -72,7 +70,7 @@ function CreateTodo() {
             multiline
             rows={3}
             fullWidth
-            label="Text.."
+            label="Todo text"
             id="InpTodoText"
             value={inpValueText}
             onChange={event => setInpValueText(event.target.value)}
@@ -96,10 +94,9 @@ function CreateTodo() {
             loading={loading}
             loadingPosition="end"
           >
-            Create todo
+            Redact todo
           </LoadingButton>
           <ToggleButtonGroup
-            className="btn-group"
             color="primary"
             value={alignment}
             exclusive
@@ -118,19 +115,11 @@ function CreateTodo() {
   );
 }
 
-CreateTodo.propTypes = {
-  inputValueTitle: PropTypes.string,
-  inputValueText: PropTypes.string,
-  loading: PropTypes.bool,
-  alignment: PropTypes.oneOf(["title", "text"]),
-  newTodo: PropTypes.shape({
-    title: PropTypes.string,
-    text: PropTypes.string,
-    date: PropTypes.string,
-    completed: PropTypes.bool
-  }),
-  inputType: PropTypes.func,
-  formHandler: PropTypes.func
+Redact.propTypes = {
+  todoTitle: PropTypes.string,
+  todoText: PropTypes.string,
+  todoId: PropTypes.string,
+  todoComp: PropTypes.bool
 };
 
-export default CreateTodo;
+export default Redact;
