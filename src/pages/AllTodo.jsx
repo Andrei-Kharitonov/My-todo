@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import TodoList from "../components/TodoList/TodoList";
+import Box from "@mui/material/Box";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -48,26 +49,28 @@ function AllTodo() {
   };
 
   return (
-    <div className="container">
-      <fieldset className="sort">
-        <legend><h2>Sort todo</h2></legend>
-        <FormControl component="fieldset">
-          <RadioGroup
-            className="sort-todo"
-            row
-            aria-label="sort todo"
-            name="row-radio-buttons-group"
-            value={sort}
-            onChange={handleSortChange}
-          >
-            <FormControlLabel value="all" control={<Radio />} label="All todo" />
-            <FormControlLabel value="completed" control={<Radio />} label="Completed" />
-            <FormControlLabel value="notCompleted" control={<Radio />} label="Not completed" />
-          </RadioGroup>
-        </FormControl>
-      </fieldset>
-      <TodoList allTodos={selectTodos} styles={styles} todoSlice={todoSlice} />
-    </div>
+    <Box sx={{ p: 3 }} style={{ paddingLeft: "10px", paddingRight: "10px" }}>
+      <div className="container">
+        <fieldset className="sort">
+          <legend><h2>Sort todo</h2></legend>
+          <FormControl component="fieldset">
+            <RadioGroup
+              className="sort-todo"
+              row
+              aria-label="sort todo"
+              name="row-radio-buttons-group"
+              value={sort}
+              onChange={handleSortChange}
+            >
+              <FormControlLabel value="all" control={<Radio />} label="All todo" />
+              <FormControlLabel value="completed" control={<Radio />} label="Completed" />
+              <FormControlLabel value="notCompleted" control={<Radio />} label="Not completed" />
+            </RadioGroup>
+          </FormControl>
+        </fieldset>
+        <TodoList allTodos={selectTodos} styles={styles} todoSlice={todoSlice} />
+      </div>
+    </Box>
   );
 }
 

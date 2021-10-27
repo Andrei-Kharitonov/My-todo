@@ -4,21 +4,12 @@ import CreateTodo from "../components/CreateTodo/CreateTodo";
 
 function NewTodo() {
   return (
-    <div>
-      <h2 style={{ textAlign: "center" }}>Create todo</h2>
-      <Box
-        sx={{
-          width: 900,
-          maxWidth: "100%",
-        }}
-        style={{
-          marginLeft: "auto",
-          marginRight: "auto",
-        }}
-      >
+    <Box sx={{ p: 3 }} style={{ paddingLeft: "10px", paddingRight: "10px" }}>
+      <div>
+        <h2 style={{ textAlign: "center" }}>Create todo</h2>
         <CreateTodo />
-      </Box>
-    </div>
+      </div >
+    </Box >
   );
 }
 
