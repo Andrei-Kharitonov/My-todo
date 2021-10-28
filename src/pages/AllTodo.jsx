@@ -7,7 +7,8 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
 import Fab from "@mui/material/Fab";
-import UpIcon from "@mui/icons-material/KeyboardArrowUp";
+//import UpIcon from "@mui/icons-material/KeyboardArrowUp";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 
 
 let styles = {
@@ -29,8 +30,8 @@ let styles = {
 
 let fabStyle = {
   position: "fixed",
-  right: "10px",
-  bottom: "10px"
+  right: "20px",
+  bottom: "30px"
 };
 
 let todoSlice = 0;
@@ -100,12 +101,11 @@ function AllTodo() {
       <TodoList allTodos={searchedTodo} styles={styles} todoSlice={todoSlice} />
       <Fab
         style={fabStyle}
-        size="medium"
         color="primary"
         aria-label="expand"
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       >
-        <UpIcon />
+        <ArrowUpwardIcon />
       </Fab>
     </div >
   );

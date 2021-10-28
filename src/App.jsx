@@ -41,7 +41,7 @@ function App() {
     <div>
       <h1 className="title">My todo</h1>
       <Box sx={{ width: "100%" }}>
-        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+        <Box sx={{ borderBottom: 1, borderColor: "divider" }} style={{ position: "sticky", top: "0", backgroundColor: "#fff", zIndex: "1000" }}>
           <Tabs value={tabValue} onChange={handleTabChange} centered>
             <Tab label="Main" />
             <Tab label="New todo" />
