@@ -9,11 +9,6 @@ body {
   margin: 0 auto;
 }
 
-.home {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
 .title {
   margin-bottom: 6px;
   margin-top: 12px;
@@ -55,7 +50,7 @@ fieldset {
     padding: 6px;
   }
   h2 {
-    margin: 8px;
+    margin: 6px;
   }
 }
 
@@ -84,6 +79,7 @@ fieldset {
   .sort-todo {
     @media (max-width: 450px) {
       flex-direction: column;
+      width: 160px;
     }
   }
 }

@@ -29,7 +29,6 @@ export const todoSlice = createSlice({
       state.todos = state.todos.map(todo => todo.id == id
         ? Object.assign({}, todo, { title: action.payload.title, text: action.payload.text })
         : todo);
-      console.log(action.payload.id, action.payload.title, action.payload.text);
     }
   }
 });

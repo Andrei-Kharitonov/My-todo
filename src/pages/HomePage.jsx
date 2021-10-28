@@ -13,7 +13,7 @@ let styles = {
   },
   li: {
     boxSizing: "border-box",
-    width: "250px",
+    width: "265px",
     margin: "5px"
   },
   card: {
@@ -29,13 +29,13 @@ let styles = {
   }
 };
 
-let todoSlice = -2;
+let todoSlice = -1;
 
 function HomePage() {
   let allTodos = useSelector(state => state.todo.todos);
 
   return (
-    <div className="home">
+    <div className="container">
       <h2 className="home-title">Welcome to My todo</h2>
       <div className="home-page">
         <fieldset className="statistic">

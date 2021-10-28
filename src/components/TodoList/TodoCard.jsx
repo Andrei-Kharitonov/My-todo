@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
-import { deleteTodo, completeTodo } from "../../reducers/todo.reducer";
+import { deleteTodo, completeTodo } from "../../store/reducers/todoSlice";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
@@ -38,7 +38,7 @@ function TodoCard({ title, text, date, id, completed, styles }) {
   }
 
   return (
-    <Card id={id} className={completed ? "todo todo_comp" : "todo"} variant="outlined" style={styles.card}>
+    <Card id={id} className="todo" variant="outlined" style={styles.card}>
       <div className="todo__container" style={styles.cardInner}>
         <React.Fragment>
           <CardContent style={styles.cardContent}>
@@ -59,7 +59,6 @@ function TodoCard({ title, text, date, id, completed, styles }) {
           <CardActions className="todo__btns">
             <RedactModal title={title} text={text} id={id} completed={completed} />
             <Button
-              className="todo__btn-comp"
               variant="outlined"
               color="success"
               style={styles.btn}
@@ -70,7 +69,6 @@ function TodoCard({ title, text, date, id, completed, styles }) {
               Complete
             </Button>
             <Button
-              className="todo__btn-del"
               variant="outlined"
               color="error"
               style={styles.btn}

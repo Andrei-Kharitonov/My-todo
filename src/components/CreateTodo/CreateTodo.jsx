@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
-import { addTodo } from "../../reducers/todo.reducer";
+import { addTodo } from "../../store/reducers/todoSlice";
 import TextField from "@mui/material/TextField";
 import LoadingButton from "@mui/lab/LoadingButton";
 import SendIcon from "@mui/icons-material/Send";
@@ -39,7 +38,8 @@ function CreateTodo() {
         newTodo.id = response.name;
         dispatch(addTodo(newTodo));
       })
-      .then(() => setLoading(false));
+      .then(() => setLoading(false))
+      .catch(error => alert(error.message));
 
     setInpValueTitle("");
     setInpValueText("");
@@ -117,20 +117,5 @@ function CreateTodo() {
     </div>
   );
 }
-
-CreateTodo.propTypes = {
-  inputValueTitle: PropTypes.string,
-  inputValueText: PropTypes.string,
-  loading: PropTypes.bool,
-  alignment: PropTypes.oneOf(["title", "text"]),
-  newTodo: PropTypes.shape({
-    title: PropTypes.string,
-    text: PropTypes.string,
-    date: PropTypes.string,
-    completed: PropTypes.bool
-  }),
-  inputType: PropTypes.func,
-  formHandler: PropTypes.func
-};
 
 export default CreateTodo;

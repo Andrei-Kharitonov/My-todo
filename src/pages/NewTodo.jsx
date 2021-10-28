@@ -6,16 +6,7 @@ function NewTodo() {
   return (
     <div className="container">
       <h2 style={{ textAlign: "center" }}>Create todo</h2>
-      <Box
-        sx={{
-          width: 900,
-          maxWidth: "100%",
-        }}
-        style={{
-          marginLeft: "auto",
-          marginRight: "auto",
-        }}
-      >
+      <Box>
         <CreateTodo />
       </Box>
     </div>

@@ -1,7 +1,7 @@
 import { hot } from "react-hot-loader/root";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { addTodosFromDB, setLoading } from "./reducers/todo.reducer";
+import { addTodosFromDB, setLoading } from "./store/reducers/todoSlice";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
@@ -28,7 +28,8 @@ function App() {
           dispatch(addTodosFromDB(todos));
         }
       })
-      .then(() => dispatch(setLoading(false)));
+      .then(() => dispatch(setLoading(false)))
+      .catch(error => alert(error.message));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
