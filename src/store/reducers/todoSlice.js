@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { fetchGetTodos, fetchAddTodo, fetchRedactTodo } from "./todoMiddleware";
 
 export const todoSlice = createSlice({
   name: "todo",
@@ -7,12 +8,6 @@ export const todoSlice = createSlice({
     loading: true
   },
   reducers: {
-    addTodosFromDB: (state, action) => {
-      state.todos = action.payload;
-    },
-    addTodo: (state, action) => {
-      state.todos = [...state.todos, action.payload];
-    },
     setLoading: (state, action) => {
       state.loading = action.payload;
     },
@@ -23,16 +18,31 @@ export const todoSlice = createSlice({
     completeTodo: (state, action) => {
       let id = action.payload;
       state.todos = state.todos.map(todo => todo.id == id ? Object.assign({}, todo, { completed: true }) : todo);
-    },
-    redactTodo: (state, action) => {
-      let id = action.payload.id;
-      state.todos = state.todos.map(todo => todo.id == id
-        ? Object.assign({}, todo, { title: action.payload.title, text: action.payload.text })
-        : todo);
     }
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchGetTodos.fulfilled, (state, action) => {
+        state.loading = false;
+        state.todos = action.payload;
+      })
+      .addCase(fetchAddTodo.fulfilled, (state, action) => {
+        state.todos = [...state.todos, action.payload];
+      })
+      .addCase(fetchRedactTodo.fulfilled, (state, action) => {
+        let id = action.payload.id;
+        console.log(action);
+        state.todos = state.todos.map(todo => todo.id == id
+          ? Object.assign({}, todo, {
+            title: action.payload.title,
+            text: action.payload.text,
+            date: action.payload.date
+          })
+          : todo);
+      });
   }
 });
 
-export const { addTodosFromDB, addTodo, setLoading, deleteTodo, completeTodo, redactTodo } = todoSlice.actions;
+export const { setLoading, deleteTodo, completeTodo } = todoSlice.actions;
 
 export default todoSlice.reducer;

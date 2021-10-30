@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
-import RedactModal from "../Redact/RedactModal";
+import RedactModal from "../RedactModal/RedactModal";
 
 function TodoCard({ title, text, date, id, completed, styles }) {
   let dispatch = useDispatch();

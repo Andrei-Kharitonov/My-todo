@@ -1,11 +1,11 @@
 import { hot } from "react-hot-loader/root";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { addTodosFromDB, setLoading } from "./store/reducers/todoSlice";
+import { fetchGetTodos } from "./store/reducers/todoMiddleware";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import TabPanel from "./components/TabPanel";
+import TabPanel from "./components/TabPanel/TabPanel";
 import HomePage from "./pages/HomePage";
 import NewTodo from "./pages/NewTodo";
 import AllTodo from "./pages/AllTodo";
@@ -15,23 +15,8 @@ function App() {
   let dispatch = useDispatch();
 
   useEffect(() => {
-    fetch("https://react-todo-list-15fdb-default-rtdb.europe-west1.firebasedatabase.app/todos.json", {
-      method: "GET",
-      headers: {
-        "Content-type": "application/json"
-      }
-    })
-      .then(response => response.json())
-      .then(response => {
-        if (response) {
-          let todos = Object.keys(response).map(key => ({ ...response[key], id: key }));
-          dispatch(addTodosFromDB(todos));
-        }
-      })
-      .then(() => dispatch(setLoading(false)))
-      .catch(error => alert(error.message));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    dispatch(fetchGetTodos());
+  }, [dispatch]);
 
   function handleTabChange(_event, newTabValue) {
     setTabValue(newTabValue);

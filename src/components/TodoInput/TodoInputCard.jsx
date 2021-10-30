@@ -4,7 +4,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 
-function NewTodoCard({ title, text }) {
+function TodoInputCard({ title, text }) {
   return (
     <Card sx={{ minWidth: 275 }}>
       <Card variant="outlined">
@@ -23,9 +23,9 @@ function NewTodoCard({ title, text }) {
   );
 }
 
-NewTodoCard.propTypes = {
+TodoInputCard.propTypes = {
   title: PropTypes.string,
   text: PropTypes.string
 };
 
-export default NewTodoCard;
+export default TodoInputCard;

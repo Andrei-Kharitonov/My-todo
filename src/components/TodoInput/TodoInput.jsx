@@ -1,16 +1,16 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
-import { addTodo } from "../../store/reducers/todoSlice";
 import TextField from "@mui/material/TextField";
 import LoadingButton from "@mui/lab/LoadingButton";
 import SendIcon from "@mui/icons-material/Send";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import NewTodoCard from "./NewTodoCard";
+import TodoInputCard from "./TodoInputCard";
 
-function CreateTodo() {
-  let [inpValueTitle, setInpValueTitle] = useState("");
-  let [inpValueText, setInpValueText] = useState("");
+function TodoInput({ initialState, todoDispatch }) {
+  let [inpValueTitle, setInpValueTitle] = useState(initialState.title);
+  let [inpValueText, setInpValueText] = useState(initialState.text);
   let [loading, setLoading] = useState(false);
   let [alignment, setAlignment] = useState("title");
   let dispatch = useDispatch();
@@ -19,27 +19,7 @@ function CreateTodo() {
     event.preventDefault();
     setLoading(true);
 
-    let newTodo = {
-      completed: false,
-      date: "Date: " + new Date().toLocaleString(),
-      title: inpValueTitle,
-      text: inpValueText,
-    };
-
-    fetch("https://react-todo-list-15fdb-default-rtdb.europe-west1.firebasedatabase.app/todos.json", {
-      method: "POST",
-      body: JSON.stringify(newTodo),
-      headers: {
-        "Content-type": "application/json"
-      }
-    })
-      .then(response => response.json())
-      .then(response => {
-        newTodo.id = response.name;
-        dispatch(addTodo(newTodo));
-      })
-      .then(() => setLoading(false))
-      .catch(error => alert(error.message));
+    dispatch(todoDispatch({ title: inpValueTitle, text: inpValueText, id: initialState.id, completed: initialState.completed })).then(() => setLoading(false));
 
     setInpValueTitle("");
     setInpValueText("");
@@ -110,7 +90,7 @@ function CreateTodo() {
           </ToggleButtonGroup>
         </div>
       </form>
-      <NewTodoCard
+      <TodoInputCard
         title={inpValueTitle}
         text={inpValueText}
       />
@@ -118,4 +98,9 @@ function CreateTodo() {
   );
 }
 
-export default CreateTodo;
+TodoInput.propTypes = {
+  initialState: PropTypes.object,
+  todoDispatch: PropTypes.func
+};
+
+export default TodoInput;

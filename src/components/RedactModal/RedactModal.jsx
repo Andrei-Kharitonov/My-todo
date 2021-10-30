@@ -7,7 +7,8 @@ import Fade from "@mui/material/Fade";
 import Button from "@mui/material/Button";
 import CreateIcon from "@mui/icons-material/Create";
 import CloseIcon from "@mui/icons-material/Close";
-import Redact from "./Redact";
+import TodoInput from "../TodoInput/TodoInput";
+import { fetchRedactTodo } from "../../store/reducers/todoMiddleware";
 
 let modalStyle = {
   position: "absolute",
@@ -62,7 +63,7 @@ function RedactModal({ title, text, id, completed }) {
                 <CloseIcon />
               </div>
             </div>
-            <Redact todoTitle={title} todoText={text} todoId={id} todoComp={completed} />
+            <TodoInput initialState={{ title, text, id, completed }} todoDispatch={fetchRedactTodo} />
           </Box>
         </Fade>
       </Modal>
