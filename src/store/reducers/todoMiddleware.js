@@ -11,6 +11,8 @@ export const fetchGetTodos = createAsyncThunk("todo/fetchTodos", async () => {
     .then(response => {
       if (response) {
         return Object.keys(response).map(key => ({ ...response[key], id: key }));
+      } else {
+        return [];
       }
     })
     .catch(error => alert(error.message));
